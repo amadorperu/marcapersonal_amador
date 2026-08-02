@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amador Rivera · Inteligencia artificial y Power Skills para equipos</title>
+<meta name="description" content="Amador Rivera Herrera. Conferencista, formador en inteligencia artificial y diseñador de programas ejecutivos. Preparo a personas y equipos para el futuro del trabajo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF;
+    --gray-50:#F5F6FA;
+    --lavender:#EDE8FF;
+    --navy:#1F2A6D;
+    --blue:#5B7CFF;
+    --violet:#7B61FF;
+    --magenta:#C85CFF;
+    --gray-mid:#8A8FA3;
+    --grad:linear-gradient(120deg,#5B7CFF 0%,#7B61FF 48%,#C85CFF 100%);
+    --grad-soft:linear-gradient(120deg,rgba(91,124,255,.14),rgba(123,97,255,.12),rgba(200,92,255,.12));
+    --shadow-sm:0 2px 10px rgba(31,42,109,.06);
+    --shadow-md:0 18px 40px -18px rgba(31,42,109,.28);
+    --shadow-lg:0 40px 80px -30px rgba(91,73,180,.45);
+    --radius:22px;
+    --radius-lg:28px;
+    --maxw:1160px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--navy);
+    background:var(--white);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;line-height:1.08;letter-spacing:-.02em;color:var(--navy)}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  ::selection{background:var(--violet);color:#fff}
+
+  /* ---------- background field ---------- */
+  .bg{position:fixed;inset:0;z-index:-2;background:var(--white)}
+  .bg::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(31,42,109,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(31,42,109,.045) 1px,transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image:radial-gradient(circle at 50% 0%,#000 0%,transparent 70%);
+    mask-image:radial-gradient(circle at 50% 0%,#000 0%,transparent 70%);
+    opacity:.7;
+  }
+  .glow{position:fixed;z-index:-1;border-radius:50%;filter:blur(90px);opacity:.55;pointer-events:none}
+  .glow.a{width:520px;height:520px;top:-160px;right:-120px;background:radial-gradient(circle,#C85CFF 0%,transparent 65%)}
+  .glow.b{width:560px;height:560px;top:220px;left:-200px;background:radial-gradient(circle,#5B7CFF 0%,transparent 65%)}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:100;
+    transition:background .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(255,255,255,.72);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    box-shadow:var(--shadow-sm);
+    border-bottom:1px solid rgba(31,42,109,.06);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .logo{display:flex;align-items:center;gap:11px;font-family:'Space Grotesk';font-weight:700;font-size:1.16rem}
+  .logo .mark{
+    width:38px;height:38px;border-radius:12px;background:var(--grad);
+    display:grid;place-items:center;color:#fff;font-weight:700;
+    box-shadow:0 8px 20px -6px rgba(123,97,255,.6);
+    position:relative;overflow:hidden;
+  }
+  .logo .mark::after{content:"";position:absolute;inset:0;background:linear-gradient(140deg,rgba(255,255,255,.5),transparent 55%);opacity:.7}
+  .logo span.dot{color:var(--violet)}
+  .nav-links{display:none}
+  .nav-links a{
+    font-size:.94rem;font-weight:500;color:var(--navy);opacity:.78;
+    position:relative;padding:6px 2px;transition:opacity .2s;
+  }
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--grad);transition:width .28s var(--ease);border-radius:2px}
+  .nav-links a:hover{opacity:1}
+  .nav-links a:hover::after{width:100%}
+  .nav-right{display:flex;align-items:center;gap:14px}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-family:'Inter';font-weight:600;font-size:.95rem;cursor:pointer;
+    border:none;border-radius:14px;padding:13px 22px;transition:transform .2s var(--ease),box-shadow .3s var(--ease),background .2s;
+    white-space:nowrap;
+  }
+  .btn-primary{background:var(--grad);color:#fff;box-shadow:0 14px 30px -12px rgba(123,97,255,.7),inset 0 1px 0 rgba(255,255,255,.35)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 22px 40px -14px rgba(123,97,255,.8),inset 0 1px 0 rgba(255,255,255,.35)}
+  .btn-ghost{background:rgba(255,255,255,.6);color:var(--navy);border:1px solid rgba(31,42,109,.12);backdrop-filter:blur(8px)}
+  .btn-ghost:hover{transform:translateY(-2px);border-color:var(--violet);color:var(--violet)}
+  .btn.sm{padding:11px 18px;font-size:.9rem}
+
+  .burger{display:flex;flex-direction:column;gap:5px;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.6);border:1px solid rgba(31,42,109,.1);align-items:center;justify-content:center;cursor:pointer}
+  .burger span{width:19px;height:2px;background:var(--navy);border-radius:2px;transition:.3s var(--ease)}
+  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  .mobile-menu{
+    position:fixed;inset:74px 0 auto 0;z-index:99;
+    background:rgba(255,255,255,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(31,42,109,.08);
+    padding:14px 22px 26px;
+    transform:translateY(-120%);transition:transform .4s var(--ease);
+    box-shadow:var(--shadow-md);
+  }
+  .mobile-menu.open{transform:translateY(0)}
+  .mobile-menu a{display:block;padding:14px 6px;font-weight:500;font-size:1.05rem;border-bottom:1px solid rgba(31,42,109,.06)}
+  .mobile-menu .btn{width:100%;margin-top:18px}
+
+  /* ---------- section shell ---------- */
+  section{padding:86px 0;position:relative}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--violet);
+    background:rgba(123,97,255,.09);border:1px solid rgba(123,97,255,.18);
+    padding:7px 14px;border-radius:100px;
+  }
+  .eyebrow .pulse{width:7px;height:7px;border-radius:50%;background:var(--grad);box-shadow:0 0 0 0 rgba(123,97,255,.5);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(123,97,255,.5)}70%{box-shadow:0 0 0 9px rgba(123,97,255,0)}100%{box-shadow:0 0 0 0 rgba(123,97,255,0)}}
+  .section-head{max-width:640px;margin:0 auto 54px;text-align:center}
+  .section-head h2{font-size:clamp(2rem,4.6vw,2.9rem);margin:20px 0 16px}
+  .section-head p{color:var(--gray-mid);font-size:1.06rem}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+
+  /* ---------- hero ---------- */
+  .hero{padding-top:60px;padding-bottom:70px}
+  .hero-grid{display:grid;gap:52px;align-items:center}
+  .hero h1{font-size:clamp(2.4rem,7vw,3.9rem);font-weight:700;margin:24px 0 20px}
+  .hero .lead{font-size:1.12rem;color:var(--gray-mid);max-width:520px;margin-bottom:32px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:44px}
+  .trust{display:flex;align-items:center;gap:12px;font-size:.88rem;color:var(--gray-mid)}
+  .trust .avatars{display:flex}
+  .trust .avatars i{width:34px;height:34px;border-radius:50%;border:2px solid #fff;margin-left:-10px;background:var(--grad);display:grid;place-items:center;font-style:normal;color:#fff;font-size:.8rem;font-weight:600}
+  .trust .avatars i:first-child{margin-left:0}
+
+  /* hero visual — signature AI orb + glass cards */
+  .hero-visual{position:relative;min-height:420px;display:grid;place-items:center}
+  .orb{
+    position:relative;width:290px;height:290px;border-radius:50%;
+    background:var(--grad);
+    box-shadow:0 40px 90px -20px rgba(123,97,255,.6),inset 0 0 60px rgba(255,255,255,.35);
+    animation:float 7s ease-in-out infinite;
+  }
+  .orb::before{content:"";position:absolute;inset:22px;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.85),transparent 42%)}
+  .orb::after{content:"";position:absolute;inset:-40px;border-radius:50%;border:1px dashed rgba(123,97,255,.35);animation:spin 26s linear infinite}
+  .ring{position:absolute;inset:-78px;border-radius:50%;border:1px solid rgba(91,124,255,.22);animation:spin 40s linear infinite reverse}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+
+  .fcard{
+    position:absolute;
+    background:rgba(255,255,255,.7);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,.9);
+    border-radius:18px;padding:14px 16px;box-shadow:var(--shadow-md);
+    display:flex;align-items:center;gap:11px;font-size:.86rem;font-weight:600;
+    animation:float 6s ease-in-out infinite;
+  }
+  .fcard .ic{width:34px;height:34px;border-radius:10px;background:var(--grad-soft);display:grid;place-items:center;color:var(--violet);flex-shrink:0}
+  .fcard .ic svg{width:18px;height:18px}
+  .fcard.c1{top:6%;left:-4%;animation-delay:.4s}
+  .fcard.c2{bottom:12%;right:-6%;animation-delay:1.2s}
+  .fcard.c3{bottom:-2%;left:6%;animation-delay:.8s;flex-direction:column;align-items:flex-start;gap:2px}
+  .fcard.c3 .num{font-family:'Space Grotesk';font-size:1.5rem;font-weight:700}
+  .fcard.c3 .lbl{font-size:.72rem;color:var(--gray-mid);font-weight:500}
+
+  /* ---------- stats bar ---------- */
+  .stats{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+    background:rgba(31,42,109,.08);
+    border-radius:var(--radius-lg);overflow:hidden;
+    border:1px solid rgba(31,42,109,.08);box-shadow:var(--shadow-md);
+    margin-top:10px;
+  }
+  .stat{background:rgba(255,255,255,.82);backdrop-filter:blur(8px);padding:30px 22px;text-align:center}
+  .stat .num{font-family:'Space Grotesk';font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .stat .lbl{font-size:.85rem;color:var(--gray-mid);margin-top:6px;font-weight:500}
+
+  /* ---------- services ---------- */
+  .cards{display:grid;gap:22px}
+  .card{
+    background:rgba(255,255,255,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(31,42,109,.07);border-radius:var(--radius);
+    padding:32px 28px;box-shadow:var(--shadow-sm);
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s;
+    position:relative;overflow:hidden;
+  }
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+  .card:hover{transform:translateY(-8px);box-shadow:var(--shadow-md);border-color:rgba(123,97,255,.25)}
+  .card:hover::before{transform:scaleX(1)}
+  .card .ic{width:56px;height:56px;border-radius:16px;background:var(--grad-soft);border:1px solid rgba(123,97,255,.16);display:grid;place-items:center;color:var(--violet);margin-bottom:20px}
+  .card .ic svg{width:26px;height:26px}
+  .card h3{font-size:1.24rem;margin-bottom:10px}
+  .card p{color:var(--gray-mid);font-size:.97rem}
+  .card .arrow{margin-top:18px;display:inline-flex;align-items:center;gap:7px;color:var(--violet);font-weight:600;font-size:.9rem;transition:gap .25s}
+  .card:hover .arrow{gap:12px}
+
+  /* ---------- about ---------- */
+  .about{background:linear-gradient(180deg,transparent,rgba(237,232,255,.5),transparent)}
+  .about-grid{display:grid;gap:44px;align-items:center}
+  .about-visual{position:relative}
+  .portrait{
+    aspect-ratio:4/5;border-radius:var(--radius-lg);
+    background:var(--grad);position:relative;overflow:hidden;
+    box-shadow:var(--shadow-lg);display:grid;place-items:center;
+  }
+  .portrait .initials{font-family:'Space Grotesk';font-size:clamp(4rem,12vw,7rem);font-weight:700;color:rgba(255,255,255,.95);letter-spacing:-.03em}
+  .portrait::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.28),transparent 45%)}
+  .about-badge{
+    position:absolute;bottom:-22px;right:-14px;
+    background:rgba(255,255,255,.85);backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,.9);border-radius:18px;padding:16px 20px;
+    box-shadow:var(--shadow-md);display:flex;align-items:center;gap:13px;
+  }
+  .about-badge .ic{width:42px;height:42px;border-radius:12px;background:var(--grad);display:grid;place-items:center;color:#fff}
+  .about-badge b{font-family:'Space Grotesk';display:block;font-size:1rem}
+  .about-badge span{font-size:.8rem;color:var(--gray-mid)}
+  .about-text h2{font-size:clamp(1.9rem,4.4vw,2.7rem);margin:18px 0 20px}
+  .about-text p{color:var(--gray-mid);margin-bottom:18px;font-size:1.03rem}
+  .about-text p strong{color:var(--navy);font-weight:600}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .chip{font-size:.86rem;font-weight:500;color:var(--navy);background:rgba(255,255,255,.7);border:1px solid rgba(31,42,109,.1);padding:9px 15px;border-radius:100px;display:inline-flex;align-items:center;gap:8px}
+  .chip svg{width:15px;height:15px;color:var(--violet)}
+
+  /* ---------- contact ---------- */
+  .contact-shell{
+    background:rgba(255,255,255,.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    border:1px solid rgba(255,255,255,.85);border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-lg);overflow:hidden;
+    display:grid;
+  }
+  .contact-aside{background:var(--grad);color:#fff;padding:44px 36px;position:relative;overflow:hidden}
+  .contact-aside::after{content:"";position:absolute;bottom:-90px;right:-70px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.28),transparent 70%)}
+  .contact-aside h3{color:#fff;font-size:1.7rem;margin-bottom:14px}
+  .contact-aside p{color:rgba(255,255,255,.88);margin-bottom:30px;font-size:.98rem}
+  .contact-item{display:flex;align-items:center;gap:14px;margin-bottom:20px;position:relative;z-index:1}
+  .contact-item .ic{width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);display:grid;place-items:center;flex-shrink:0}
+  .contact-item .ic svg{width:20px;height:20px}
+  .contact-item b{display:block;font-family:'Space Grotesk';font-size:.98rem}
+  .contact-item span{font-size:.85rem;color:rgba(255,255,255,.8)}
+  .contact-form{padding:44px 36px}
+  .field{margin-bottom:18px}
+  .field label{display:block;font-size:.86rem;font-weight:600;margin-bottom:8px}
+  .field input,.field select,.field textarea{
+    width:100%;font-family:'Inter';font-size:.96rem;color:var(--navy);
+    background:rgba(245,246,250,.7);border:1px solid rgba(31,42,109,.12);border-radius:13px;
+    padding:13px 15px;transition:border-color .25s,box-shadow .25s,background .25s;
+  }
+  .field textarea{resize:vertical;min-height:110px}
+  .field input:focus,.field select:focus,.field textarea:focus{
+    outline:none;border-color:var(--violet);background:#fff;
+    box-shadow:0 0 0 4px rgba(123,97,255,.13);
+  }
+  .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:#e05a8a;box-shadow:0 0 0 4px rgba(224,90,138,.12)}
+  .field .err{display:none;color:#e05a8a;font-size:.8rem;margin-top:6px}
+  .field.invalid .err{display:block}
+  .row2{display:grid;gap:18px}
+  .contact-form .btn-primary{width:100%;margin-top:8px}
+  .form-note{font-size:.82rem;color:var(--gray-mid);margin-top:16px;text-align:center}
+  .success{
+    display:none;text-align:center;padding:40px 20px;
+  }
+  .success.show{display:block;animation:fadein .5s var(--ease)}
+  @keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .success .check{width:70px;height:70px;border-radius:50%;background:var(--grad);display:grid;place-items:center;margin:0 auto 20px;color:#fff;box-shadow:0 16px 34px -12px rgba(123,97,255,.7)}
+  .success h3{font-size:1.5rem;margin-bottom:10px}
+  .success p{color:var(--gray-mid)}
+
+  /* ---------- footer ---------- */
+  footer{padding:60px 0 34px;border-top:1px solid rgba(31,42,109,.08);margin-top:20px}
+  .foot-grid{display:grid;gap:34px}
+  .foot-brand p{color:var(--gray-mid);font-size:.94rem;max-width:320px;margin-top:16px}
+  .foot-social{display:flex;gap:12px;margin-top:20px}
+  .foot-social a{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.7);border:1px solid rgba(31,42,109,.1);display:grid;place-items:center;color:var(--navy);transition:transform .25s,background .25s,color .25s}
+  .foot-social a:hover{transform:translateY(-3px);background:var(--grad);color:#fff;border-color:transparent}
+  .foot-col h4{font-family:'Space Grotesk';font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gray-mid);margin-bottom:16px}
+  .foot-col a{display:block;color:var(--navy);opacity:.8;font-size:.94rem;padding:6px 0;transition:opacity .2s,color .2s}
+  .foot-col a:hover{opacity:1;color:var(--violet)}
+  .foot-bottom{margin-top:44px;padding-top:26px;border-top:1px solid rgba(31,42,109,.08);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;font-size:.86rem;color:var(--gray-mid)}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- responsive ---------- */
+  @media(min-width:640px){
+    .stats{grid-template-columns:repeat(4,1fr)}
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .row2{grid-template-columns:1fr 1fr}
+  }
+  @media(min-width:900px){
+    .nav-links{display:flex;gap:34px}
+    .burger{display:none}
+    .hero-grid{grid-template-columns:1.05fr .95fr}
+    .cards{grid-template-columns:repeat(3,1fr)}
+    .about-grid{grid-template-columns:.85fr 1.15fr;gap:70px}
+    .contact-shell{grid-template-columns:.85fr 1.15fr}
+    .foot-grid{grid-template-columns:1.4fr 1fr 1fr;gap:50px}
+    section{padding:100px 0}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="glow a"></div>
+<div class="glow b"></div>
+
+<!-- ===== HEADER ===== -->
+<header id="top">
+  <div class="wrap nav">
+    <a href="#top" class="logo">
+      <span class="mark">A<span class="dot">.</span></span>
+      Amador Rivera
+    </a>
+    <nav class="nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#metricas">Trayectoria</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-right">
+      <a href="#contacto" class="btn btn-primary sm">Agenda una charla</a>
+      <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#servicios">Servicios</a>
+  <a href="#sobre-mi">Sobre mí</a>
+  <a href="#metricas">Trayectoria</a>
+  <a href="#contacto">Contacto</a>
+  <a href="#contacto" class="btn btn-primary">Agenda una charla</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy reveal">
+      <span class="eyebrow"><span class="pulse"></span>Docente · Conferencista · Formador en IA</span>
+      <h1>Inteligencia artificial y <span class="grad-text">Power Skills</span> para los equipos que lideran el cambio.</h1>
+      <p class="lead">Soy Amador Rivera. Diseño programas, dicto conferencias y capacito equipos para que trabajen mejor con la tecnología que ya llegó a las organizaciones.</p>
+      <div class="hero-cta">
+        <a href="#contacto" class="btn btn-primary">
+          Trabajemos juntos
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#servicios" class="btn btn-ghost">Conoce mis servicios</a>
+      </div>
+      <div class="trust">
+        <div class="avatars"><i>EJ</i><i>IA</i><i>PS</i></div>
+        <span>Equipos de banca, retail, sector público y educación ya se prepararon conmigo.</span>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="ring"></div>
+      <div class="orb"></div>
+      <div class="fcard c1">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v1a4 4 0 0 0-2 3.5A4 4 0 0 0 8 18a4 4 0 0 0 8 0 4 4 0 0 0 2-7.5A4 4 0 0 0 16 7V6a4 4 0 0 0-4-4Z"/></svg></span>
+        IA aplicada al trabajo
+      </div>
+      <div class="fcard c2">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13A4 4 0 0 1 16 11"/></svg></span>
+        Futuro del trabajo
+      </div>
+      <div class="fcard c3">
+        <span class="num grad-text">+10</span>
+        <span class="lbl">años formando líderes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section id="metricas" style="padding-top:0">
+  <div class="wrap">
+    <div class="stats reveal">
+      <div class="stat"><div class="num" data-count="10" data-suffix="+">0</div><div class="lbl">Años en educación ejecutiva</div></div>
+      <div class="stat"><div class="num" data-count="60" data-suffix="+">0</div><div class="lbl">Programas diseñados</div></div>
+      <div class="stat"><div class="num" data-count="3000" data-suffix="+">0</div><div class="lbl">Personas capacitadas</div></div>
+      <div class="stat"><div class="num" data-count="40" data-suffix="+">0</div><div class="lbl">Conferencias dictadas</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section id="servicios">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="pulse"></span>Lo que hago</span>
+      <h2>Servicios pensados para <span class="grad-text">cerrar la brecha</span> entre tu equipo y la tecnología.</h2>
+      <p>Cada formato parte de un diagnóstico real y termina en algo que las personas pueden aplicar al día siguiente.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></div>
+        <h3>Conferencias y keynotes</h3>
+        <p>Charlas sobre el futuro del trabajo, inteligencia artificial y Power Skills para congresos, eventos corporativos y espacios académicos.</p>
+        <a href="#contacto" class="arrow">Invítame a tu evento
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 9l2 2 2-3 2 4 3-4"/></svg></div>
+        <h3>Capacitación en IA para empresas</h3>
+        <p>Talleres prácticos donde los equipos aprenden a usar herramientas de inteligencia artificial en tareas concretas de su trabajo diario.</p>
+        <a href="#contacto" class="arrow">Diseñemos un taller
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <h3>Diseño de programas ejecutivos</h3>
+        <p>Diplomados, especializaciones y programas in company a la medida, con la estructura y el rigor de una escuela de negocios líder.</p>
+        <a href="#contacto" class="arrow">Construyamos tu programa
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg></div>
+        <h3>Consultoría y mentoría</h3>
+        <p>Acompañamiento para incorporar la IA y las Power Skills en tu estrategia de aprendizaje, con métricas claras y foco en resultados.</p>
+        <a href="#contacto" class="arrow">Conversemos
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <h3>Cursos abiertos de IA</h3>
+        <p>Programas virtuales en vivo para profesionales que quieren dar el salto y aplicar inteligencia artificial en su rol, sin conocimientos previos.</p>
+        <a href="#contacto" class="arrow">Quiero inscribirme
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
+        <h3>Charlas para liderazgo</h3>
+        <p>Sesiones ejecutivas para directorios y equipos gerenciales sobre cómo la IA cambia la toma de decisiones y el rol de las personas.</p>
+        <a href="#contacto" class="arrow">Agenda una sesión
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="sobre-mi" class="about">
+  <div class="wrap about-grid">
+    <div class="about-visual reveal">
+      <div class="portrait"><span class="initials">AR</span></div>
+      <div class="about-badge">
+        <span class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+        <div><b>CENTRUM PUCP</b><span>Head of Programs, Educación Ejecutiva</span></div>
+      </div>
+    </div>
+
+    <div class="about-text reveal">
+      <span class="eyebrow"><span class="pulse"></span>Sobre mí</span>
+      <h2>Ayudo a que las personas no le teman a la <span class="grad-text">inteligencia artificial</span>, sino que la usen.</h2>
+      <p>Soy <strong>Amador Rivera Herrera</strong>. Dirijo los programas de Educación Ejecutiva de CENTRUM PUCP y llevo más de diez años diseñando experiencias de aprendizaje para líderes en el Perú y la región.</p>
+      <p>Trabajo también como conferencista, formador en herramientas de inteligencia artificial y consultor. Comparto contenido sobre el futuro del trabajo y las Power Skills, las habilidades que sostienen a los equipos cuando la tecnología cambia todo lo demás.</p>
+      <p>Mi enfoque es simple y aterrizado. Menos teoría suelta y más práctica que la gente aplica en su trabajo desde el primer día.</p>
+      <div class="chips">
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Educación ejecutiva</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>IA para negocios</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Power Skills</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Diseño de programas</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Conferencista</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contacto">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="pulse"></span>Contacto</span>
+      <h2>Cuéntame qué necesita <span class="grad-text">tu equipo</span>.</h2>
+      <p>Escríbeme y en menos de 48 horas te respondo con una propuesta a la medida.</p>
+    </div>
+
+    <div class="contact-shell reveal">
+      <aside class="contact-aside">
+        <h3>Hablemos</h3>
+        <p>Ya sea una conferencia, un taller de IA o un programa completo, empecemos por entender bien tu objetivo.</p>
+        <div class="contact-item">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></span>
+          <div><b>Correo</b><span>hola@amadorrivera.pe</span></div>
+        </div>
+        <div class="contact-item">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/><path d="M10 9v12M10 14a4 4 0 0 1 8 0v7"/></svg></span>
+          <div><b>LinkedIn</b><span>Amador Rivera Herrera</span></div>
+        </div>
+        <div class="contact-item">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <div><b>Ubicación</b><span>Lima, Perú</span></div>
+        </div>
+      </aside>
+
+      <div class="contact-form">
+        <form id="contactForm" novalidate>
+          <div class="row2">
+            <div class="field">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" placeholder="Tu nombre y apellido" required>
+              <span class="err">Escribe tu nombre.</span>
+            </div>
+            <div class="field">
+              <label for="correo">Correo</label>
+              <input type="email" id="correo" name="correo" placeholder="tucorreo@empresa.com" required>
+              <span class="err">Escribe un correo válido.</span>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="organizacion">Organización</label>
+              <input type="text" id="organizacion" name="organizacion" placeholder="Nombre de tu empresa">
+              <span class="err"></span>
+            </div>
+            <div class="field">
+              <label for="servicio">¿Qué te interesa?</label>
+              <select id="servicio" name="servicio" required>
+                <option value="">Elige una opción</option>
+                <option>Conferencia o keynote</option>
+                <option>Taller de IA para empresas</option>
+                <option>Diseño de programa ejecutivo</option>
+                <option>Consultoría o mentoría</option>
+                <option>Curso abierto de IA</option>
+                <option>Otro</option>
+              </select>
+              <span class="err">Elige una opción.</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Cuéntame sobre tu equipo, la fecha y lo que buscas lograr." required></textarea>
+            <span class="err">Cuéntame un poco más.</span>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Enviar mensaje
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+          <p class="form-note">Responderé personalmente a tu correo. Tus datos no se comparten con terceros.</p>
+        </form>
+
+        <div class="success" id="success">
+          <div class="check"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <h3>Mensaje enviado</h3>
+          <p>Gracias por escribir. Te respondo en menos de 48 horas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="logo"><span class="mark">A<span class="dot">.</span></span>Amador Rivera</a>
+        <p>Conferencista, formador en inteligencia artificial y diseñador de programas ejecutivos. Preparo personas y equipos para el futuro del trabajo.</p>
+        <div class="foot-social">
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/><path d="M10 9v12M10 14a4 4 0 0 1 8 0v7"/></svg></a>
+          <a href="#" aria-label="Correo"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></a>
+          <a href="#" aria-label="Sitio web"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Navega</h4>
+        <a href="#servicios">Servicios</a>
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#metricas">Trayectoria</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="foot-col">
+        <h4>Servicios</h4>
+        <a href="#contacto">Conferencias</a>
+        <a href="#contacto">Talleres de IA</a>
+        <a href="#contacto">Programas ejecutivos</a>
+        <a href="#contacto">Consultoría</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Amador Rivera Herrera. Todos los derechos reservados.</span>
+      <span>Lima, Perú · Hecho con enfoque en las personas.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // header shadow on scroll
+  const header = document.getElementById('top');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 20);
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // mobile menu
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('mobileMenu');
+  const toggleMenu = (open) => {
+    burger.classList.toggle('open', open);
+    menu.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+  };
+  burger.addEventListener('click', () => toggleMenu(!menu.classList.contains('open')));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
+  // scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // count-up stats
+  const animateCount = (el) => {
+    const target = +el.dataset.count;
+    const suffix = el.dataset.suffix || '';
+    const dur = 1400; const start = performance.now();
+    const fmt = (n) => n >= 1000 ? n.toLocaleString('es-PE') : n;
+    const step = (now) => {
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(Math.round(target * eased)) + suffix;
+      if(p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const statsIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ animateCount(e.target); statsIO.unobserve(e.target); } });
+  }, {threshold:.6});
+  document.querySelectorAll('.stat .num').forEach(el => statsIO.observe(el));
+
+  // form validation
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('success');
+  const setInvalid = (field, bad) => field.closest('.field').classList.toggle('invalid', bad);
+  const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let ok = true;
+    const nombre = form.nombre, correo = form.correo, servicio = form.servicio, mensaje = form.mensaje;
+    const checks = [
+      [nombre, nombre.value.trim().length >= 2],
+      [correo, emailOk(correo.value.trim())],
+      [servicio, servicio.value !== ''],
+      [mensaje, mensaje.value.trim().length >= 5],
+    ];
+    checks.forEach(([f, valid]) => { setInvalid(f, !valid); if(!valid) ok = false; });
+    if(!ok){ form.querySelector('.field.invalid input, .field.invalid select, .field.invalid textarea')?.focus(); return; }
+    form.style.display = 'none';
+    success.classList.add('show');
+  });
+
+  // clear error state on input
+  form.querySelectorAll('input,select,textarea').forEach(el => {
+    el.addEventListener('input', () => el.closest('.field').classList.remove('invalid'));
+  });
+</script>
+</body>
+</html>
